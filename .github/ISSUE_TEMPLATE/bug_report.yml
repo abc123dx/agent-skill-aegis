@@ -1,37 +1,37 @@
-name: Bug report
-description: Report a reproducible scanner or reporter problem.
-title: "[Bug]: "
+name: 缺陷报告
+description: 报告可稳定复现的扫描器或报告器问题。
+title: "[缺陷] "
 labels:
   - bug
 body:
   - type: markdown
     attributes:
-      value: Do not include live credentials, private prompts, or sensitive scan output.
+      value: 请勿提交真实凭据、私密提示词或包含敏感信息的扫描输出。
   - type: textarea
     id: summary
     attributes:
-      label: What happened?
-      description: Include the expected and actual behavior.
+      label: 发生了什么？
+      description: 请同时说明预期行为与实际行为。
     validations:
       required: true
   - type: input
     id: version
     attributes:
-      label: Aegis version
-      placeholder: 0.1.0
+      label: Aegis 版本
+      placeholder: 0.1.1
     validations:
       required: true
   - type: input
     id: node
     attributes:
-      label: Node.js version and operating system
-      placeholder: Node 20.18.0 on macOS 15
+      label: Node.js 版本与操作系统
+      placeholder: Node 20.18.0，macOS 15
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
-      label: Minimal sanitized reproduction
+      label: 已脱敏的最小复现
       render: shell
     validations:
       required: true

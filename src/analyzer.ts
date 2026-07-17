@@ -37,9 +37,9 @@ function firstIndex(content: string, candidates: string[]): number {
 
 function redact(value: string): string {
   if (value.length <= 6) {
-    return "[REDACTED]";
+    return "[已脱敏]";
   }
-  return `${value.slice(0, 3)}…${value.slice(-2)} [REDACTED]`;
+  return `${value.slice(0, 3)}…${value.slice(-2)} [已脱敏]`;
 }
 
 function linesWithOffsets(content: string): Array<{ text: string; offset: number }> {
@@ -95,7 +95,7 @@ function analyzeSecrets(
         makeFinding(
           "AEGIS001",
           locationAt(file.relativePath, content, index),
-          "A credential-like literal is embedded in this file.",
+          "此文件中嵌入了疑似凭据的字面量。",
           redact(value)
         )
       );
@@ -117,31 +117,31 @@ function analyzeTextRules(
       id: "AEGIS003",
       regex:
         /\b(?:curl|wget)\b[^\n|;&]*(?:\||\b(?:bash|sh|zsh)\s+-c\b)[^\n]*(?:bash|sh|zsh|iex|invoke-expression)\b/gi,
-      message: "Remote content appears to be executed without an integrity check."
+      message: "远程内容似乎在未经完整性校验的情况下被执行。"
     },
     {
       id: "AEGIS004",
       regex:
         /(?:\brm\s+-[^\n]*r[^\n]*f\s+(?:\/|\$HOME|~)\b|\bchmod\s+(?:-R\s+)?777\b|\b(?:bash|sh|zsh)\s+-c\b)/gi,
-      message: "This command uses a high-risk shell execution pattern."
+      message: "此命令使用了高风险的 Shell 执行模式。"
     },
     {
       id: "AEGIS007",
       regex:
         /\b(?:ignore|disregard|override)\s+(?:(?:all|any|the)\s+)?(?:previous|prior|system|developer)\s+(?:instructions?|messages?|prompts?)\b/gi,
-      message: "The text attempts to override trusted instruction context."
+      message: "文本试图覆盖可信的指令上下文。"
     },
     {
       id: "AEGIS008",
       regex:
         /\b(?:exfiltrate|upload|transmit|send|forward)\b[^\n]{0,80}\b(?:secrets?|credentials?|tokens?|private\s+keys?|user\s+data|files?)\b/gi,
-      message: "The text requests transmission of potentially sensitive data."
+      message: "文本要求传输可能包含敏感信息的数据。"
     },
     {
       id: "AEGIS012",
       regex:
         /\b(?:do\s+not|don't|never)\s+(?:tell|inform|notify|show|reveal\s+to)\s+(?:the\s+)?user\b|\bwithout\s+(?:the\s+)?user(?:'s)?\s+(?:knowledge|consent|approval)\b|\bsilently\s+(?:upload|send|execute|collect)\b/gi,
-      message: "The text instructs the agent to conceal behavior from the user."
+      message: "文本要求 Agent 向用户隐瞒行为。"
     }
   ];
 
@@ -165,7 +165,7 @@ function analyzeTextRules(
       makeFinding(
         "AEGIS006",
         locationAt(file.relativePath, content, match.index ?? 0),
-        `Remote endpoint uses clear-text HTTP: ${match[0]}`,
+        `远程端点使用明文 HTTP：${match[0]}`,
         match[0]
       )
     );
@@ -180,7 +180,7 @@ function analyzeTextRules(
         makeFinding(
           "AEGIS002",
           locationAt(file.relativePath, content, match.index ?? 0),
-          `npx package "${packageName}" is not pinned to an exact version.`,
+          `npx 软件包“${packageName}”未锁定到精确版本。`,
           match[0]
         )
       );
@@ -196,7 +196,7 @@ function analyzeTextRules(
         makeFinding(
           "AEGIS002",
           locationAt(file.relativePath, content, match.index ?? 0),
-          `uvx package "${packageName}" is not pinned to an exact version.`,
+          `uvx 软件包“${packageName}”未锁定到精确版本。`,
           match[0]
         )
       );
@@ -292,7 +292,7 @@ function analyzeObject(
         makeFinding(
           "AEGIS002",
           locationAt(file.relativePath, content, index),
-          `${runner} package "${dependency}" is not pinned to an exact version.`,
+          `${runner} 软件包“${dependency}”未锁定到精确版本。`,
           `${runner} ${dependency}`
         )
       );
@@ -311,7 +311,7 @@ function analyzeObject(
       makeFinding(
         "AEGIS004",
         locationAt(file.relativePath, content, index),
-        `MCP server delegates execution through ${command}.`,
+        `MCP 服务器通过 ${command} 委托执行。`,
         `${command} ${stringArguments.join(" ").slice(0, 120)}`
       )
     );
@@ -341,7 +341,7 @@ function analyzeObject(
             makeFinding(
               "AEGIS005",
               locationAt(file.relativePath, content, index),
-              `Filesystem permission includes broad path "${candidate}".`,
+              `文件系统权限包含范围过宽的路径“${candidate}”。`,
               candidate
             )
           );
@@ -389,7 +389,7 @@ function analyzeTomlConfig(
           makeFinding(
             "AEGIS002",
             locationAt(file.relativePath, content, locationIndex),
-            `${command} package "${dependency}" is not pinned to an exact version.`,
+            `${command} 软件包“${dependency}”未锁定到精确版本。`,
             `${command} ${dependency}`
           )
         );
@@ -403,7 +403,7 @@ function analyzeTomlConfig(
               makeFinding(
                 "AEGIS005",
                 locationAt(file.relativePath, content, locationIndex),
-                `Filesystem permission includes broad path "${argument}".`,
+                `文件系统权限包含范围过宽的路径“${argument}”。`,
                 argument
               )
             );
@@ -423,7 +423,7 @@ function analyzeTomlConfig(
         makeFinding(
           "AEGIS004",
           locationAt(file.relativePath, content, locationIndex),
-          `MCP server delegates execution through ${command}.`,
+          `MCP 服务器通过 ${command} 委托执行。`,
           `${command} ${args.join(" ").slice(0, 120)}`
         )
       );
@@ -451,7 +451,7 @@ function analyzeMcpConfig(
         makeFinding(
           "AEGIS011",
           locationAt(file.relativePath, content, error.offset),
-          `JSON parse error: ${printParseErrorCode(error.error)}.`
+          `JSON 解析错误：${printParseErrorCode(error.error)}。`
         )
       );
     }
@@ -472,7 +472,7 @@ function analyzeSkillMetadata(
       makeFinding(
         "AEGIS009",
         { file: file.relativePath, line: 1, column: 1 },
-        "SKILL.md has no YAML frontmatter; required fields are name and description."
+        "SKILL.md 缺少 YAML frontmatter；必需字段为 name 和 description。"
       )
     );
     return;
@@ -491,7 +491,7 @@ function analyzeSkillMetadata(
       makeFinding(
         "AEGIS009",
         { file: file.relativePath, line: 1, column: 1 },
-        `SKILL.md frontmatter is missing: ${missing.join(", ")}.`
+        `SKILL.md frontmatter 缺少字段：${missing.join(", ")}。`
       )
     );
   }
@@ -505,7 +505,7 @@ export function analyzeFile(file: DiscoveredFile, content: string): Finding[] {
       makeFinding(
         "AEGIS010",
         { file: file.relativePath, line: 1, column: 1 },
-        "This security-sensitive file is world-writable."
+        "此安全敏感文件可被任意本地用户写入。"
       )
     );
   }

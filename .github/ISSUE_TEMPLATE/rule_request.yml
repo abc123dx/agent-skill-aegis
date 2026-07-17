@@ -1,6 +1,6 @@
-name: Detection rule proposal
-description: Propose a deterministic, testable MCP or Agent Skill security rule.
-title: "[Rule]: "
+name: 检测规则提案
+description: 提议一条确定、可测试的 MCP 或 Agent Skill 安全规则。
+title: "[规则] "
 labels:
   - enhancement
   - rule
@@ -8,21 +8,21 @@ body:
   - type: textarea
     id: threat
     attributes:
-      label: Threat model
-      description: What attacker behavior or unsafe configuration should this detect?
+      label: 威胁模型
+      description: 这条规则应检测哪种攻击行为或不安全配置？
     validations:
       required: true
   - type: textarea
     id: signal
     attributes:
-      label: Deterministic signal
-      description: Describe an observable signal that does not require an LLM or network call.
+      label: 确定性信号
+      description: 描述一个无需大模型或网络请求即可观察的信号。
     validations:
       required: true
   - type: textarea
     id: examples
     attributes:
-      label: Positive and negative examples
-      description: Use synthetic values only.
+      label: 正例与反例
+      description: 只能使用合成数据。
     validations:
       required: true

@@ -1,39 +1,34 @@
-# Security policy
+# 安全策略
 
-Agent Skill Aegis processes security-sensitive configuration. Please do not
-paste live credentials, private prompts, or unredacted scan output into a
-public issue.
+Agent Skill Aegis 会处理安全敏感配置。请勿在公开 Issue 中粘贴真实凭据、
+私密提示词或未经脱敏的扫描报告。
 
-## Supported versions
+## 支持版本
 
-Security fixes are provided for the latest release on the `main` branch. Until
-the project reaches 1.0, minor releases may include schema or rule refinements
-documented in the changelog.
+安全修复面向 `main` 分支上的最新版本。在项目达到 1.0 之前，小版本可能
+包含 schema 或规则细节调整，所有变化都会记录在更新日志中。
 
-## Report a vulnerability
+## 报告漏洞
 
-Use
-[GitHub's private vulnerability reporting](https://github.com/abc123dx/agent-skill-aegis/security/advisories/new)
-and include:
+请使用
+[GitHub 私密漏洞报告](https://github.com/abc123dx/agent-skill-aegis/security/advisories/new)
+并提供：
 
-- the affected version and environment;
-- a minimal, synthetic reproduction;
-- the expected security boundary;
-- the potential impact; and
-- any suggested mitigation.
+- 受影响的版本与运行环境；
+- 最小化且使用合成数据的复现；
+- 预期的安全边界；
+- 潜在影响；
+- 可选的缓解建议。
 
-You should receive an acknowledgement within 72 hours. We aim to provide an
-initial assessment within seven days and coordinate disclosure after a fix is
-available.
+通常会在 72 小时内确认收到报告，并争取在七天内给出初步评估；修复可用
+后再协调公开披露。
 
-## Scanner safety
+## 扫描器安全边界
 
-Aegis performs read-only local analysis. It does not execute MCP commands,
-install scanned packages, follow symbolic links, or send file contents over
-the network. Reports redact credential evidence, but JSON and HTML reports may
-still contain file paths and matched instruction text. Treat reports as
-sensitive artifacts.
+Aegis 仅在本地执行只读分析。它不会执行 MCP 命令、安装扫描到的软件包、
+跟随符号链接或通过网络发送文件内容。报告会对凭据证据脱敏，但 JSON 与
+HTML 报告仍可能包含文件路径和命中的指令文本，请将报告视为敏感制品。
 
-This tool is a focused static analyzer, not a guarantee that an MCP server or
-Agent Skill is safe. Review package provenance, runtime behavior, permissions,
-and network policy before granting an agent access to valuable data.
+本工具是聚焦静态分析的辅助工具，不能保证某个 MCP 服务器或 Agent Skill
+绝对安全。在允许 Agent 访问重要数据前，仍应审查软件包来源、运行时行为、
+权限与网络策略。

@@ -10,7 +10,7 @@ import type { ScanResult } from "../src/types.js";
 
 const result: ScanResult = {
   schemaVersion: "1.0",
-  tool: { name: "agent-skill-aegis", version: "0.1.0" },
+  tool: { name: "agent-skill-aegis", version: "0.1.1" },
   root: "/tmp/project",
   startedAt: "2026-01-01T00:00:00.000Z",
   durationMs: 12.5,
@@ -27,11 +27,11 @@ const result: ScanResult = {
   findings: [
     {
       ruleId: "AEGIS001",
-      title: "Hard-coded credential",
+      title: "硬编码凭据",
       severity: "critical",
       category: "credentials",
-      message: "A secret was found.",
-      recommendation: "Rotate it.",
+      message: "发现一个密钥。",
+      recommendation: "立即轮换。",
       file: ".mcp.json",
       line: 3,
       column: 8,
@@ -40,16 +40,17 @@ const result: ScanResult = {
   ]
 };
 
-describe("reporters", () => {
-  it("renders a readable terminal report without forced color", () => {
+describe("报告器", () => {
+  it("渲染不强制使用颜色的可读中文终端报告", () => {
     const output = renderTerminal(result, { color: false });
 
-    expect(output).toContain("AEGIS // MCP & AGENT SKILL SECURITY");
+    expect(output).toContain("AEGIS // MCP 与 AGENT SKILL 安全审计");
+    expect(output).toContain("硬编码凭据");
     expect(output).toContain(".mcp.json:3:8");
     expect(output).not.toContain("\u001B[");
   });
 
-  it("renders valid machine-readable JSON", () => {
+  it("渲染有效的机器可读 JSON", () => {
     const output = renderReport(result, "json");
 
     expect(JSON.parse(output)).toMatchObject({
@@ -58,16 +59,18 @@ describe("reporters", () => {
     });
   });
 
-  it("renders escaped, filterable standalone HTML", () => {
+  it("渲染已转义、可筛选的中文独立 HTML", () => {
     const output = renderHtml(result);
 
     expect(output).toContain("<!doctype html>");
+    expect(output).toContain('<html lang="zh-CN">');
+    expect(output).toContain("安全态势");
     expect(output).toContain('data-filter="critical"');
     expect(output).toContain("&lt;redacted&gt;");
     expect(output).not.toContain("<redacted>");
   });
 
-  it("renders SARIF 2.1.0 with physical locations and rule metadata", () => {
+  it("渲染包含物理位置与规则元数据的 SARIF 2.1.0", () => {
     const sarif = JSON.parse(renderSarif(result));
 
     expect(sarif.version).toBe("2.1.0");
@@ -77,7 +80,7 @@ describe("reporters", () => {
     ).toBe(3);
   });
 
-  it("validates output formats", () => {
+  it("验证输出格式", () => {
     expect(isOutputFormat("sarif")).toBe(true);
     expect(isOutputFormat("xml")).toBe(false);
   });

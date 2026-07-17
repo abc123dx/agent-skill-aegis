@@ -11,8 +11,8 @@ const vulnerable = fileURLToPath(
 );
 const safe = fileURLToPath(new URL("../examples/safe", import.meta.url));
 
-describe("scanProject", () => {
-  it("finds every advertised risk family in the vulnerable fixture", async () => {
+describe("scanProject 项目扫描", () => {
+  it("在高风险样例中发现所有公开说明的风险类型", async () => {
     const result = await scanProject(vulnerable);
     const ids = new Set(result.findings.map((finding) => finding.ruleId));
 
@@ -37,7 +37,7 @@ describe("scanProject", () => {
     expect(result.summary.riskScore).toBeGreaterThan(50);
   });
 
-  it("keeps the safe fixture free of findings", async () => {
+  it("确保安全样例没有问题", async () => {
     const result = await scanProject(safe);
 
     expect(result.filesScanned).toBe(2);
@@ -45,14 +45,14 @@ describe("scanProject", () => {
     expect(result.summary.riskScore).toBe(0);
   });
 
-  it("applies severity failure thresholds", async () => {
+  it("应用严重级别失败阈值", async () => {
     const result = await scanProject(vulnerable);
 
     expect(shouldFail(result, "critical")).toBe(true);
     expect(shouldFail(result, "never")).toBe(false);
   });
 
-  it("validates threshold names", () => {
+  it("验证阈值名称", () => {
     expect(isFailThreshold("medium")).toBe(true);
     expect(isFailThreshold("never")).toBe(true);
     expect(isFailThreshold("banana")).toBe(false);

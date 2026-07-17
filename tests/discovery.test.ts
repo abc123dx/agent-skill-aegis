@@ -20,8 +20,8 @@ afterEach(async () => {
   );
 });
 
-describe("discoverFiles", () => {
-  it("discovers root and nested MCP configs and Agent Skills", async () => {
+describe("discoverFiles 文件发现", () => {
+  it("发现根目录与嵌套的 MCP 配置及 Agent Skill", async () => {
     const root = await workspace();
     await mkdir(path.join(root, ".cursor"), { recursive: true });
     await mkdir(path.join(root, ".agents", "skills", "reader"), {
@@ -48,7 +48,7 @@ describe("discoverFiles", () => {
     ]);
   });
 
-  it("supports Codex TOML and OpenCode config names", async () => {
+  it("支持 Codex TOML 与 OpenCode 配置文件名", async () => {
     const root = await workspace();
     await mkdir(path.join(root, ".codex"), { recursive: true });
     await writeFile(path.join(root, ".codex", "config.toml"), "[mcp_servers]");
@@ -62,7 +62,7 @@ describe("discoverFiles", () => {
     ]);
   });
 
-  it("ignores generated and dependency directories", async () => {
+  it("忽略生成目录与依赖目录", async () => {
     const root = await workspace();
     await mkdir(path.join(root, "node_modules", "unsafe"), {
       recursive: true
@@ -74,7 +74,7 @@ describe("discoverFiles", () => {
     await expect(discoverFiles(root)).resolves.toEqual([]);
   });
 
-  it("does not traverse symbolic links", async () => {
+  it("不遍历符号链接", async () => {
     const root = await workspace();
     await mkdir(path.join(root, "real"), { recursive: true });
     await writeFile(path.join(root, "real", "SKILL.md"), "# real");

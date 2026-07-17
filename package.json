@@ -1,7 +1,7 @@
 {
   "name": "agent-skill-aegis",
-  "version": "0.1.0",
-  "description": "Deterministic supply-chain security scanner for MCP configs and Agent Skills.",
+  "version": "0.1.1",
+  "description": "面向 MCP 配置与 Agent Skill 的确定性供应链安全扫描器。",
   "keywords": [
     "agent-skills",
     "ai-security",

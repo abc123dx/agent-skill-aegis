@@ -1,35 +1,29 @@
-# Contributor Covenant Code of Conduct
+# 贡献者公约行为准则
 
-## Our pledge
+## 我们的承诺
 
-We pledge to make participation in this project a harassment-free experience
-for everyone, regardless of age, body size, visible or invisible disability,
-ethnicity, sex characteristics, gender identity and expression, level of
-experience, education, socioeconomic status, nationality, personal appearance,
-race, caste, color, religion, or sexual identity and orientation.
+我们承诺，无论年龄、体型、可见或不可见的残障、族裔、性别特征、性别
+认同与表达、经验水平、教育程度、社会经济地位、国籍、个人外表、种族、
+阶层、肤色、宗教、性身份或性取向如何，每个人都能在不受骚扰的环境中
+参与本项目。
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+我们承诺以有助于建立开放、友好、多元、包容且健康社区的方式行动和交流。
 
-## Our standards
+## 我们的标准
 
-Positive behavior includes showing empathy, respecting differing viewpoints,
-giving and accepting constructive feedback, taking responsibility for
-mistakes, and focusing on what is best for the community.
+积极行为包括：展现同理心、尊重不同观点、给予并接受建设性反馈、为错误
+承担责任，以及始终关注社区的整体利益。
 
-Unacceptable behavior includes sexualized language or imagery, trolling,
-insults, harassment, publishing others' private information, and conduct that
-could reasonably be considered inappropriate in a professional setting.
+不可接受的行为包括：色情化语言或图像、恶意挑衅、侮辱、骚扰、公开他人
+隐私信息，以及任何在专业环境中可被合理认定为不当的行为。
 
-## Enforcement
+## 执行
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported privately through the repository owner's GitHub profile. All
-complaints will be reviewed promptly and fairly. Maintainers may remove,
-edit, or reject contributions and may temporarily or permanently ban
-contributors for behavior they deem inappropriate or harmful.
+如需报告辱骂、骚扰或其他不可接受的行为，请通过仓库所有者的 GitHub
+个人主页私下联系。所有投诉都会被及时、公正地审查。维护者可移除、编辑
+或拒绝贡献，也可暂时或永久禁止实施不当或有害行为的贡献者参与。
 
-## Attribution
+## 来源
 
-This Code of Conduct is adapted from the Contributor Covenant, version 2.1,
-available at https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.
+本行为准则改编自 Contributor Covenant 2.1：
+https://www.contributor-covenant.org/version/2/1/code_of_conduct.html

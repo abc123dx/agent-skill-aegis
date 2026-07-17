@@ -1,14 +1,14 @@
-## What changed
+## 变更内容
 
-<!-- Explain the user-visible behavior and the threat model, if applicable. -->
+<!-- 说明用户可见行为，以及适用时的威胁模型。 -->
 
-## Verification
+## 验证
 
-- [ ] `npm run check` passes
-- [ ] New rules include positive and negative fixtures
-- [ ] Findings contain an actionable remediation
-- [ ] No real credentials, private prompts, or sensitive scan output are included
+- [ ] `npm run check` 通过
+- [ ] 新规则同时包含正例与反例
+- [ ] 每条问题都提供可执行的修复建议
+- [ ] 未包含真实凭据、私密提示词或敏感扫描输出
 
-## Compatibility
+## 兼容性
 
-<!-- Note changes to rule IDs, JSON schema, CLI flags, or SARIF output. -->
+<!-- 说明规则 ID、JSON schema、CLI flags 或 SARIF 输出的变化。 -->

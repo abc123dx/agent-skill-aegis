@@ -3,7 +3,7 @@ import path from "node:path";
 import { analyzeFile } from "./analyzer.js";
 import { discoverFiles } from "./discovery.js";
 import { severities } from "./types.js";
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 const defaultMaxFileSize = 1024 * 1024;
 const severityRank = {
     critical: 5,

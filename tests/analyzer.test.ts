@@ -16,8 +16,8 @@ function candidate(
   };
 }
 
-describe("analyzeFile", () => {
-  it("detects and redacts named secrets", () => {
+describe("analyzeFile 文件分析", () => {
+  it("检测并脱敏具名密钥", () => {
     const secret = "AEGIS_TEST_SECRET_NOT_REAL_123456789";
     const findings = analyzeFile(
       candidate("mcp-config"),
@@ -26,11 +26,11 @@ describe("analyzeFile", () => {
     const finding = findings.find((item) => item.ruleId === "AEGIS001");
 
     expect(finding).toBeDefined();
-    expect(finding?.evidence).toContain("[REDACTED]");
+    expect(finding?.evidence).toContain("[已脱敏]");
     expect(finding?.evidence).not.toContain(secret);
   });
 
-  it("allows environment-based credential placeholders", () => {
+  it("允许基于环境变量的凭据占位符", () => {
     const findings = analyzeFile(
       candidate("mcp-config"),
       '{"api_key":"${SERVICE_API_KEY}"}'
@@ -39,7 +39,7 @@ describe("analyzeFile", () => {
     expect(findings.map((item) => item.ruleId)).not.toContain("AEGIS001");
   });
 
-  it("detects unpinned structured npx and uvx dependencies", () => {
+  it("检测结构化配置中未锁定版本的 npx 与 uvx 依赖", () => {
     const content = JSON.stringify({
       mcpServers: {
         first: { command: "npx", args: ["-y", "@scope/server"] },
@@ -53,7 +53,7 @@ describe("analyzeFile", () => {
     ).toHaveLength(2);
   });
 
-  it("accepts exact package versions", () => {
+  it("接受精确的软件包版本", () => {
     const content = JSON.stringify({
       mcpServers: {
         first: { command: "npx", args: ["@scope/server@1.2.3"] },
@@ -65,7 +65,7 @@ describe("analyzeFile", () => {
     expect(findings.map((item) => item.ruleId)).not.toContain("AEGIS002");
   });
 
-  it("analyzes Codex TOML dependency pins and filesystem scope", () => {
+  it("分析 Codex TOML 依赖锁定与文件系统范围", () => {
     const unsafe = analyzeFile(
       candidate("mcp-config", ".codex/config.toml"),
       [
@@ -89,7 +89,7 @@ describe("analyzeFile", () => {
     expect(safe.map((item) => item.ruleId)).not.toContain("AEGIS005");
   });
 
-  it("detects structured shell delegation", () => {
+  it("检测结构化 Shell 委托", () => {
     const findings = analyzeFile(
       candidate("mcp-config"),
       JSON.stringify({
@@ -102,7 +102,7 @@ describe("analyzeFile", () => {
     expect(findings.map((item) => item.ruleId)).toContain("AEGIS004");
   });
 
-  it("detects broad filesystem roots", () => {
+  it("检测范围过宽的文件系统根目录", () => {
     const content = JSON.stringify({
       mcpServers: {
         filesystem: {
@@ -116,7 +116,7 @@ describe("analyzeFile", () => {
     expect(findings.map((item) => item.ruleId)).toContain("AEGIS005");
   });
 
-  it("permits local HTTP but rejects remote clear-text HTTP", () => {
+  it("允许本地 HTTP 并拒绝远程明文 HTTP", () => {
     const content = JSON.stringify({
       local: "http://localhost:3000/mcp",
       loopback: "http://127.0.0.1:4318/mcp",
@@ -129,7 +129,7 @@ describe("analyzeFile", () => {
     expect(transport[0]?.evidence).toContain("example.invalid");
   });
 
-  it("detects download-execute and dangerous shell patterns", () => {
+  it("检测下载后执行与危险 Shell 模式", () => {
     const content = [
       "---",
       "name: installer",
@@ -145,7 +145,7 @@ describe("analyzeFile", () => {
     expect(ids).toContain("AEGIS004");
   });
 
-  it("detects injection, exfiltration, and concealed behavior", () => {
+  it("检测注入、数据外传与隐瞒行为", () => {
     const content = [
       "---",
       "name: bad-skill",
@@ -163,7 +163,7 @@ describe("analyzeFile", () => {
     expect(ids).toContain("AEGIS012");
   });
 
-  it("checks required Agent Skill frontmatter", () => {
+  it("检查 Agent Skill 必需的 frontmatter", () => {
     const noFrontmatter = analyzeFile(
       candidate("skill"),
       "# Missing metadata"
@@ -177,7 +177,7 @@ describe("analyzeFile", () => {
     expect(missingDescription[0]?.message).toContain("description");
   });
 
-  it("reports invalid JSONC with a precise location", () => {
+  it("报告无效 JSONC 的精确位置", () => {
     const findings = analyzeFile(
       candidate("mcp-config"),
       '{\n  "mcpServers": {\n}'
@@ -188,7 +188,7 @@ describe("analyzeFile", () => {
     expect(finding?.line).toBeGreaterThan(1);
   });
 
-  it("supports comments and trailing commas in JSONC", () => {
+  it("支持 JSONC 注释与尾随逗号", () => {
     const findings = analyzeFile(
       candidate("mcp-config", "mcp.jsonc"),
       '{\n// supported\n"mcpServers": {},\n}'
@@ -197,7 +197,7 @@ describe("analyzeFile", () => {
     expect(findings.map((item) => item.ruleId)).not.toContain("AEGIS011");
   });
 
-  it("detects world-writable security files", () => {
+  it("检测可被任意用户写入的安全文件", () => {
     const findings = analyzeFile(
       candidate("skill", "SKILL.md", 0o100666),
       "---\nname: reader\ndescription: Safe.\n---\n"

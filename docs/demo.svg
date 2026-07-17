@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img" aria-labelledby="title desc">
-  <title id="title">Agent Skill Aegis terminal report</title>
-  <desc id="desc">A dark terminal showing critical, high, and medium findings in a vulnerable agent workspace.</desc>
+  <title id="title">Agent Skill Aegis 中文终端报告</title>
+  <desc id="desc">深色终端展示高风险 Agent 工作区中的严重、高危与中危问题。</desc>
   <defs>
     <linearGradient id="window" x1="0" y1="0" x2="0" y2="1">
       <stop stop-color="#0d1b2e"/>
@@ -13,25 +13,25 @@
     <rect x="34" y="32" width="1052" height="554" rx="17" fill="url(#window)" stroke="#263b56"/>
     <path d="M34 84H1086" stroke="#263b56"/>
     <circle cx="67" cy="58" r="7" fill="#ff6b81"/><circle cx="91" cy="58" r="7" fill="#ffd166"/><circle cx="115" cy="58" r="7" fill="#55d6be"/>
-    <text x="560" y="64" fill="#7188a3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" text-anchor="middle">aegis — examples/vulnerable</text>
+    <text x="560" y="64" fill="#7188a3" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace" font-size="14" text-anchor="middle">aegis — 高风险示例</text>
   </g>
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">
     <text x="70" y="124" fill="#8da4bf">$</text><text x="91" y="124" fill="#edf6ff">aegis scan examples/vulnerable</text>
-    <text x="70" y="174" fill="#45d7ff" font-weight="700">AEGIS // MCP &amp; AGENT SKILL SECURITY</text>
-    <text x="70" y="203" fill="#8da4bf">2 files · 7.41 ms · risk 100/100</text>
-    <text x="70" y="245" fill="#e879f9">CRITICAL 3</text>
-    <text x="232" y="245" fill="#ff6b81">HIGH 7</text>
-    <text x="344" y="245" fill="#ffd166">MEDIUM 3</text>
-    <text x="70" y="296" fill="#e879f9">CRITICAL</text>
-    <text x="176" y="296" fill="#edf6ff" font-weight="700">AEGIS001 Hard-coded credential</text>
+    <text x="70" y="174" fill="#45d7ff" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace" font-weight="700">AEGIS // MCP 与 AGENT SKILL 安全审计</text>
+    <text x="70" y="203" fill="#8da4bf" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">2 个文件 · 7.41 毫秒 · 风险 100/100</text>
+    <text x="70" y="245" fill="#e879f9" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">严重 3</text>
+    <text x="190" y="245" fill="#ff6b81" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">高危 7</text>
+    <text x="300" y="245" fill="#ffd166" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">中危 3</text>
+    <text x="70" y="296" fill="#e879f9" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">严重</text>
+    <text x="176" y="296" fill="#edf6ff" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace" font-weight="700">AEGIS001 硬编码凭据</text>
     <text x="176" y="325" fill="#45d7ff">.mcp.json:11:28</text>
-    <text x="176" y="353" fill="#b6c9dd">A credential-like literal is embedded in this file.</text>
-    <text x="70" y="405" fill="#e879f9">CRITICAL</text>
-    <text x="176" y="405" fill="#edf6ff" font-weight="700">AEGIS003 Downloaded content is executed</text>
+    <text x="176" y="353" fill="#b6c9dd" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">此文件中嵌入了疑似凭据的字面量。</text>
+    <text x="70" y="405" fill="#e879f9" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">严重</text>
+    <text x="176" y="405" fill="#edf6ff" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace" font-weight="700">AEGIS003 下载内容被直接执行</text>
     <text x="176" y="434" fill="#45d7ff">.mcp.json:18:10</text>
-    <text x="176" y="462" fill="#b6c9dd">Remote content appears to be executed without an integrity check.</text>
-    <text x="70" y="514" fill="#ff6b81">HIGH</text>
-    <text x="176" y="514" fill="#edf6ff" font-weight="700">AEGIS007 Prompt-injection instruction</text>
+    <text x="176" y="462" fill="#b6c9dd" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">远程内容似乎在未经完整性校验的情况下被执行。</text>
+    <text x="70" y="514" fill="#ff6b81" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace">高危</text>
+    <text x="176" y="514" fill="#edf6ff" font-family="PingFang SC, Noto Sans CJK SC, ui-monospace, monospace" font-weight="700">AEGIS007 提示词注入指令</text>
     <text x="176" y="543" fill="#45d7ff">SKILL.md:3:1</text>
   </g>
 </svg>

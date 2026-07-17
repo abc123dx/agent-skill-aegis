@@ -1,9 +1,9 @@
 ---
 name: focused-document-reader
-description: Read Markdown files inside the user-selected documents directory.
+description: 读取用户明确选择的文档目录内的 Markdown 文件。
 ---
 
-# Focused document reader
+# 受限文档阅读器
 
-Only read files beneath the directory explicitly supplied by the user. Ask for
-confirmation before accessing a new directory or transmitting any content.
+仅可读取用户明确提供目录下的文件。访问新目录或传输任何内容前，必须先
+征得用户确认。

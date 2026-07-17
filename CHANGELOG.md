@@ -1,17 +1,28 @@
-# Changelog
+# 更新日志
 
-All notable changes will be documented here. This project follows
-[Semantic Versioning](https://semver.org/).
+所有重要变更都会记录在此。本项目遵循
+[语义化版本](https://semver.org/lang/zh-CN/)。
 
-## [Unreleased]
+## [未发布]
+
+## [0.1.1] - 2026-07-17
+
+### 变更
+
+- 将 README、贡献指南、安全策略、社区模板与示例说明改为中文优先。
+- 汉化 CLI 帮助、参数错误、规则名称、问题说明、修复建议、终端报告与
+  独立 HTML 报告。
+- 将演示横幅与终端截图中的可见文案改为中文。
+- 保持命令与 flags、`AEGIS###` 规则 ID、严重级别/状态枚举、
+  JSON `schemaVersion: "1.0"`、SARIF 2.1.0 字段及退出码兼容。
 
 ## [0.1.0] - 2026-07-17
 
-### Added
+### 新增
 
-- Recursive discovery for MCP JSON/JSONC, Codex TOML, OpenCode, and `SKILL.md`.
-- Twelve deterministic rules covering credentials, dependencies, execution,
-  permissions, transport, prompt safety, metadata, and parsing.
-- Terminal, JSON, standalone HTML, and SARIF 2.1.0 reporters.
-- Reusable composite GitHub Action and Node 20/22 CI.
-- Safe and deliberately vulnerable example workspaces.
+- 递归发现 MCP JSON/JSONC、Codex TOML、OpenCode 与 `SKILL.md`。
+- 十二条确定性规则，覆盖凭据、依赖、执行、权限、传输、提示词安全、
+  元数据与解析。
+- 终端、JSON、独立 HTML 与 SARIF 2.1.0 报告器。
+- 可复用的组合 GitHub Action 与 Node 20/22 CI 配置。
+- 安全示例工作区与故意设计的高风险示例工作区。

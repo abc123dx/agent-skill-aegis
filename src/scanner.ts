@@ -12,7 +12,7 @@ import {
   type Severity
 } from "./types.js";
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 const defaultMaxFileSize = 1024 * 1024;
 
 const severityRank: Record<Severity, number> = {

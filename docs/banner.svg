@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
   <title id="title">Agent Skill Aegis</title>
-  <desc id="desc">A luminous shield protecting an MCP and Agent Skill dependency graph.</desc>
+  <desc id="desc">发光盾牌守护 MCP 与 Agent Skill 依赖图。</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#06101e"/>
@@ -47,16 +47,16 @@
   </g>
 
   <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
-    <text x="78" y="100" fill="#51ddff" font-size="15" font-weight="700" letter-spacing="4">DETERMINISTIC AGENT SECURITY</text>
+    <text x="78" y="100" fill="#51ddff" font-family="PingFang SC, Noto Sans CJK SC, system-ui" font-size="16" font-weight="700" letter-spacing="3">确定性 AGENT 安全</text>
     <text x="74" y="191" fill="#f3f8ff" font-family="Inter, ui-sans-serif, system-ui" font-size="64" font-weight="800" letter-spacing="-3">Agent Skill Aegis</text>
-    <text x="78" y="241" fill="#a7bdd7" font-family="Inter, ui-sans-serif, system-ui" font-size="23">Audit MCP configs and Agent Skills before trust becomes execution.</text>
+    <text x="78" y="241" fill="#a7bdd7" font-family="PingFang SC, Noto Sans CJK SC, system-ui" font-size="22">在信任变成执行之前，审计 MCP 配置与 Agent Skill。</text>
     <g transform="translate(78 296)">
       <rect width="158" height="42" rx="21" fill="#42dbff" fill-opacity=".1" stroke="#42dbff" stroke-opacity=".55"/>
-      <text x="24" y="27" fill="#70e8ff" font-size="14">NO LLM REQUIRED</text>
+      <text x="79" y="27" text-anchor="middle" fill="#70e8ff" font-family="PingFang SC, Noto Sans CJK SC, system-ui" font-size="14">无需大模型</text>
       <rect x="174" width="136" height="42" rx="21" fill="#748aff" fill-opacity=".1" stroke="#748aff" stroke-opacity=".55"/>
-      <text x="197" y="27" fill="#a7b5ff" font-size="14">SARIF NATIVE</text>
+      <text x="242" y="27" text-anchor="middle" fill="#a7b5ff" font-family="PingFang SC, Noto Sans CJK SC, system-ui" font-size="14">SARIF 原生</text>
       <rect x="326" width="156" height="42" rx="21" fill="#6ce5bd" fill-opacity=".1" stroke="#6ce5bd" stroke-opacity=".55"/>
-      <text x="350" y="27" fill="#83ebc8" font-size="14">LOCAL &amp; READ-ONLY</text>
+      <text x="404" y="27" text-anchor="middle" fill="#83ebc8" font-family="PingFang SC, Noto Sans CJK SC, system-ui" font-size="14">本地 · 只读</text>
     </g>
   </g>
   <path d="M0 411H1280" stroke="#42dbff" stroke-opacity=".35"/>

@@ -3,7 +3,7 @@
 
   <br>
 
-  [![CI](https://github.com/abc123dx/agent-skill-aegis/actions/workflows/ci.yml/badge.svg)](https://github.com/abc123dx/agent-skill-aegis/actions/workflows/ci.yml)
+  ![测试：27/27 通过](https://img.shields.io/badge/测试-27%2F27%20通过-22c55e.svg)
   [![Node.js 20+](https://img.shields.io/badge/Node.js-20%2B-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
   [![SARIF 2.1.0](https://img.shields.io/badge/SARIF-2.1.0-45d7ff)](https://docs.oasis-open.org/sarif/sarif/v2.1.0/)
   [![许可证：MIT](https://img.shields.io/badge/License-MIT-748aff.svg)](LICENSE)

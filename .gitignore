@@ -1,0 +1,8 @@
+node_modules/
+coverage/
+*.log
+*.sarif
+*.html
+.DS_Store
+.idea/
+.vscode/

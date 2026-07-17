@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "project-files": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@0.6.2",
+        "${workspaceFolder}/documents"
+      ],
+      "env": {
+        "SERVICE_TOKEN": "${AEGIS_DEMO_SERVICE_TOKEN}"
+      }
+    },
+    "local-api": {
+      "url": "http://127.0.0.1:4318/mcp"
+    }
+  }
+}

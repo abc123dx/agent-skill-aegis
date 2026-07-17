@@ -1,0 +1,64 @@
+name: Agent Skill Aegis
+description: Audit MCP configurations and Agent Skills for deterministic supply-chain risks.
+author: abc123dx
+
+branding:
+  icon: shield
+  color: blue
+
+inputs:
+  path:
+    description: Directory to scan, relative to the checked-out repository.
+    required: false
+    default: .
+  fail-on:
+    description: Minimum failing severity (critical, high, medium, low, info, or never).
+    required: false
+    default: high
+  format:
+    description: Report format (terminal, json, html, or sarif).
+    required: false
+    default: terminal
+  output:
+    description: Optional report file path.
+    required: false
+    default: ""
+
+outputs:
+  report:
+    description: The report path supplied through the output input.
+    value: ${{ steps.scan.outputs.report }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+        cache: npm
+        cache-dependency-path: ${{ github.action_path }}/package-lock.json
+
+    - name: Install production dependencies
+      shell: bash
+      run: npm ci --omit=dev --ignore-scripts --prefix "$GITHUB_ACTION_PATH"
+
+    - name: Scan agent configuration
+      id: scan
+      shell: bash
+      env:
+        AEGIS_FAIL_ON: ${{ inputs.fail-on }}
+        AEGIS_FORMAT: ${{ inputs.format }}
+        AEGIS_OUTPUT: ${{ inputs.output }}
+        AEGIS_SCAN_PATH: ${{ inputs.path }}
+      run: |
+        args=(scan "$AEGIS_SCAN_PATH" --format "$AEGIS_FORMAT" --fail-on "$AEGIS_FAIL_ON" --no-color)
+        if [[ -n "$AEGIS_OUTPUT" ]]; then
+          args+=(--output "$AEGIS_OUTPUT" --quiet)
+        fi
+        set +e
+        node "$GITHUB_ACTION_PATH/dist/cli.js" "${args[@]}"
+        status=$?
+        set -e
+        echo "report=$AEGIS_OUTPUT" >> "$GITHUB_OUTPUT"
+        exit "$status"

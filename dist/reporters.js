@@ -1,0 +1,223 @@
+import path from "node:path";
+import { rules } from "./catalog.js";
+const ansi = {
+    reset: "\u001B[0m",
+    bold: "\u001B[1m",
+    dim: "\u001B[2m",
+    cyan: "\u001B[36m",
+    green: "\u001B[32m",
+    yellow: "\u001B[33m",
+    red: "\u001B[31m",
+    magenta: "\u001B[35m"
+};
+function paint(text, code, enabled) {
+    return enabled ? `${code}${text}${ansi.reset}` : text;
+}
+function severityColor(severity) {
+    switch (severity) {
+        case "critical":
+            return ansi.magenta;
+        case "high":
+            return ansi.red;
+        case "medium":
+            return ansi.yellow;
+        case "low":
+            return ansi.cyan;
+        case "info":
+            return ansi.dim;
+    }
+}
+export function renderTerminal(result, options = {}) {
+    const color = options.color ?? true;
+    const summaryItems = [
+        ["CRITICAL", result.summary.critical, "critical"],
+        ["HIGH", result.summary.high, "high"],
+        ["MEDIUM", result.summary.medium, "medium"],
+        ["LOW", result.summary.low, "low"],
+        ["INFO", result.summary.info, "info"]
+    ];
+    const output = [
+        "",
+        paint("  AEGIS // MCP & AGENT SKILL SECURITY", ansi.bold + ansi.cyan, color),
+        paint(`  ${result.filesScanned} files · ${result.durationMs} ms · risk ${result.summary.riskScore}/100`, ansi.dim, color),
+        "",
+        summaryItems
+            .map(([label, count, severity]) => paint(`${label} ${count}`, severityColor(severity), color))
+            .join("  "),
+        ""
+    ];
+    if (result.findings.length === 0) {
+        output.push(paint("  ✓ No deterministic security findings.", ansi.green, color), "");
+        return output.join("\n");
+    }
+    for (const finding of result.findings) {
+        const badge = paint(finding.severity.toUpperCase().padEnd(8), severityColor(finding.severity), color);
+        output.push(`  ${badge} ${paint(finding.ruleId, ansi.bold, color)} ${finding.title}`, `           ${paint(`${finding.file}:${finding.line}:${finding.column}`, ansi.cyan, color)}`, `           ${finding.message}`, `           ${paint(`Fix: ${finding.recommendation}`, ansi.dim, color)}`, "");
+    }
+    return output.join("\n");
+}
+function escapeHtml(value) {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+function findingCard(finding) {
+    return `<article class="finding" data-severity="${finding.severity}">
+  <div class="finding-head">
+    <span class="severity ${finding.severity}">${finding.severity}</span>
+    <code>${escapeHtml(finding.ruleId)}</code>
+    <strong>${escapeHtml(finding.title)}</strong>
+  </div>
+  <div class="location">${escapeHtml(finding.file)}:${finding.line}:${finding.column}</div>
+  <p>${escapeHtml(finding.message)}</p>
+  ${finding.evidence === undefined
+        ? ""
+        : `<pre>${escapeHtml(finding.evidence)}</pre>`}
+  <p class="fix"><b>Remediation</b> ${escapeHtml(finding.recommendation)}</p>
+</article>`;
+}
+export function renderHtml(result) {
+    const cards = result.findings.length === 0
+        ? '<div class="empty">✓ No deterministic security findings.</div>'
+        : result.findings.map(findingCard).join("\n");
+    return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agent Skill Aegis · Security Report</title>
+  <style>
+    :root{color-scheme:dark;--bg:#07111f;--panel:#0d1a2b;--line:#203551;--text:#eaf2ff;--muted:#8da4bf;--cyan:#45d7ff;--critical:#e879f9;--high:#ff6b81;--medium:#ffd166;--low:#55d6be;--info:#8da4bf}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#14305a 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.6 Inter,ui-sans-serif,system-ui,sans-serif}main{max-width:1080px;margin:auto;padding:56px 24px 80px}.eyebrow{color:var(--cyan);font:700 12px/1.2 ui-monospace,monospace;letter-spacing:.18em}.hero{display:flex;justify-content:space-between;gap:24px;align-items:end;margin:16px 0 38px}.hero h1{font-size:clamp(34px,6vw,68px);line-height:1;margin:0;letter-spacing:-.055em}.risk{min-width:150px;text-align:right}.risk b{display:block;color:var(--cyan);font-size:46px;line-height:1}.muted,.location{color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:24px 0 36px}.stat{padding:17px;border:1px solid var(--line);border-radius:14px;background:#0d1a2bcc}.stat b{display:block;font-size:28px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}button{border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--text);padding:8px 13px;cursor:pointer}button:hover,button.active{border-color:var(--cyan);color:var(--cyan)}.finding{border:1px solid var(--line);border-radius:16px;background:linear-gradient(140deg,#0e1d30,#0a1625);padding:20px;margin:12px 0;box-shadow:0 14px 40px #0003}.finding-head{display:flex;align-items:center;gap:11px}.severity{border:1px solid currentColor;border-radius:999px;padding:2px 8px;font:700 11px ui-monospace,monospace;text-transform:uppercase}.critical{color:var(--critical)}.high{color:var(--high)}.medium{color:var(--medium)}.low{color:var(--low)}.info{color:var(--info)}code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.location{font:13px ui-monospace,monospace;margin-top:8px}pre{overflow:auto;padding:10px 12px;border-radius:8px;background:#050c16;color:#aac4e3}.fix{padding-top:12px;border-top:1px solid var(--line)}.fix b{color:var(--cyan);margin-right:8px}.empty{padding:40px;text-align:center;border:1px solid #286958;border-radius:16px;background:#0c2923;color:#66e0bd}footer{margin-top:34px;color:var(--muted);font-size:13px}@media(max-width:700px){.hero{align-items:start;flex-direction:column}.risk{text-align:left}.stats{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">AGENT SKILL AEGIS // DETERMINISTIC AUDIT</div>
+  <section class="hero">
+    <div><h1>Security<br>posture report</h1><p class="muted">${escapeHtml(result.root)} · ${result.filesScanned} files scanned</p></div>
+    <div class="risk"><b>${result.summary.riskScore}</b><span class="muted">risk score / 100</span></div>
+  </section>
+  <section class="stats">
+    ${["critical", "high", "medium", "low", "info"]
+        .map((severity) => `<div class="stat ${severity}"><span>${severity.toUpperCase()}</span><b>${result.summary[severity]}</b></div>`)
+        .join("")}
+  </section>
+  <nav class="filters" aria-label="Finding filters">
+    <button class="active" data-filter="all">All ${result.summary.total}</button>
+    ${["critical", "high", "medium", "low", "info"]
+        .map((severity) => `<button data-filter="${severity}">${severity} ${result.summary[severity]}</button>`)
+        .join("")}
+  </nav>
+  <section id="findings">${cards}</section>
+  <footer>Generated ${escapeHtml(result.startedAt)} by agent-skill-aegis ${escapeHtml(result.tool.version)} · No source code or findings left this machine.</footer>
+</main>
+<script>
+document.querySelectorAll('button[data-filter]').forEach(button=>button.addEventListener('click',()=>{
+  document.querySelectorAll('button').forEach(item=>item.classList.remove('active'));
+  button.classList.add('active');
+  document.querySelectorAll('.finding').forEach(card=>{
+    card.hidden=button.dataset.filter!=='all'&&card.dataset.severity!==button.dataset.filter;
+  });
+}));
+</script>
+</body>
+</html>`;
+}
+function sarifLevel(severity) {
+    if (severity === "critical" || severity === "high") {
+        return "error";
+    }
+    if (severity === "medium") {
+        return "warning";
+    }
+    return "note";
+}
+export function renderSarif(result) {
+    const usedRuleIds = [...new Set(result.findings.map((item) => item.ruleId))];
+    const sarif = {
+        $schema: "https://json.schemastore.org/sarif-2.1.0.json",
+        version: "2.1.0",
+        runs: [
+            {
+                tool: {
+                    driver: {
+                        name: result.tool.name,
+                        version: result.tool.version,
+                        informationUri: "https://github.com/abc123dx/agent-skill-aegis",
+                        rules: usedRuleIds.map((id) => {
+                            const rule = rules[id];
+                            return {
+                                id: rule.id,
+                                name: rule.title.replaceAll(/\W+/g, ""),
+                                shortDescription: { text: rule.title },
+                                fullDescription: { text: rule.description },
+                                help: {
+                                    text: rule.recommendation,
+                                    markdown: `**Remediation:** ${rule.recommendation}`
+                                },
+                                properties: {
+                                    category: rule.category,
+                                    defaultSeverity: rule.severity,
+                                    tags: ["security", "mcp", "agent-skills", rule.category]
+                                }
+                            };
+                        })
+                    }
+                },
+                invocations: [
+                    {
+                        executionSuccessful: true,
+                        endTimeUtc: new Date(new Date(result.startedAt).getTime() + result.durationMs).toISOString()
+                    }
+                ],
+                results: result.findings.map((finding) => ({
+                    ruleId: finding.ruleId,
+                    level: sarifLevel(finding.severity),
+                    message: { text: `${finding.title}: ${finding.message}` },
+                    locations: [
+                        {
+                            physicalLocation: {
+                                artifactLocation: {
+                                    uri: finding.file.split(path.sep).join("/"),
+                                    uriBaseId: "%SRCROOT%"
+                                },
+                                region: {
+                                    startLine: finding.line,
+                                    startColumn: finding.column
+                                }
+                            }
+                        }
+                    ],
+                    properties: {
+                        category: finding.category,
+                        severity: finding.severity,
+                        ...(finding.evidence === undefined
+                            ? {}
+                            : { evidence: finding.evidence })
+                    }
+                }))
+            }
+        ]
+    };
+    return `${JSON.stringify(sarif, null, 2)}\n`;
+}
+export function renderReport(result, format, options = {}) {
+    switch (format) {
+        case "terminal":
+            return renderTerminal(result, options);
+        case "json":
+            return `${JSON.stringify(result, null, 2)}\n`;
+        case "html":
+            return renderHtml(result);
+        case "sarif":
+            return renderSarif(result);
+    }
+}
+export function isOutputFormat(value) {
+    return ["terminal", "json", "html", "sarif"].includes(value);
+}
+//# sourceMappingURL=reporters.js.map

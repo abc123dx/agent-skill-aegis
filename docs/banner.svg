@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+  <title id="title">Agent Skill Aegis</title>
+  <desc id="desc">A luminous shield protecting an MCP and Agent Skill dependency graph.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#06101e"/>
+      <stop offset=".55" stop-color="#0b1930"/>
+      <stop offset="1" stop-color="#101f3a"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#6ce5ff"/>
+      <stop offset="1" stop-color="#5f7cff"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#31d8ff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#31d8ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="lineGlow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#8db6de" stroke-opacity=".07"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="440" rx="28" fill="url(#bg)"/>
+  <rect width="1280" height="440" rx="28" fill="url(#grid)"/>
+  <circle cx="1040" cy="210" r="230" fill="url(#glow)"/>
+  <circle cx="1040" cy="210" r="145" fill="#22d3ee" opacity=".08" filter="url(#soft)"/>
+
+  <g fill="none" stroke="#43d8ff" stroke-opacity=".5" stroke-width="2">
+    <path d="M862 111L964 157M862 297L964 257M1134 157L1212 103M1134 257L1212 315"/>
+    <path d="M824 205H937M1159 205H1240"/>
+  </g>
+  <g fill="#0b1930" stroke="#57dcff" stroke-width="2">
+    <circle cx="824" cy="205" r="10"/><circle cx="862" cy="111" r="8"/>
+    <circle cx="862" cy="297" r="8"/><circle cx="1212" cy="103" r="8"/>
+    <circle cx="1212" cy="315" r="8"/><circle cx="1240" cy="205" r="10"/>
+  </g>
+
+  <g transform="translate(958 91)" filter="url(#lineGlow)">
+    <path d="M86 0c29 21 62 29 86 34v73c0 59-33 105-86 137C33 212 0 166 0 107V34C24 29 57 21 86 0Z" fill="#08182a" stroke="url(#shield)" stroke-width="6"/>
+    <path d="M52 115l24 24 48-57" fill="none" stroke="#70efff" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="78" y="100" fill="#51ddff" font-size="15" font-weight="700" letter-spacing="4">DETERMINISTIC AGENT SECURITY</text>
+    <text x="74" y="191" fill="#f3f8ff" font-family="Inter, ui-sans-serif, system-ui" font-size="64" font-weight="800" letter-spacing="-3">Agent Skill Aegis</text>
+    <text x="78" y="241" fill="#a7bdd7" font-family="Inter, ui-sans-serif, system-ui" font-size="23">Audit MCP configs and Agent Skills before trust becomes execution.</text>
+    <g transform="translate(78 296)">
+      <rect width="158" height="42" rx="21" fill="#42dbff" fill-opacity=".1" stroke="#42dbff" stroke-opacity=".55"/>
+      <text x="24" y="27" fill="#70e8ff" font-size="14">NO LLM REQUIRED</text>
+      <rect x="174" width="136" height="42" rx="21" fill="#748aff" fill-opacity=".1" stroke="#748aff" stroke-opacity=".55"/>
+      <text x="197" y="27" fill="#a7b5ff" font-size="14">SARIF NATIVE</text>
+      <rect x="326" width="156" height="42" rx="21" fill="#6ce5bd" fill-opacity=".1" stroke="#6ce5bd" stroke-opacity=".55"/>
+      <text x="350" y="27" fill="#83ebc8" font-size="14">LOCAL &amp; READ-ONLY</text>
+    </g>
+  </g>
+  <path d="M0 411H1280" stroke="#42dbff" stroke-opacity=".35"/>
+  <rect x="0" y="411" width="325" height="2" fill="#42dbff"/>
+</svg>

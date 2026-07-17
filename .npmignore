@@ -1,0 +1,7 @@
+coverage/
+src/
+tests/
+.github/
+eslint.config.mjs
+tsconfig.json
+vitest.config.ts

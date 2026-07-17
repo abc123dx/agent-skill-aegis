@@ -1,0 +1,28 @@
+name: Detection rule proposal
+description: Propose a deterministic, testable MCP or Agent Skill security rule.
+title: "[Rule]: "
+labels:
+  - enhancement
+  - rule
+body:
+  - type: textarea
+    id: threat
+    attributes:
+      label: Threat model
+      description: What attacker behavior or unsafe configuration should this detect?
+    validations:
+      required: true
+  - type: textarea
+    id: signal
+    attributes:
+      label: Deterministic signal
+      description: Describe an observable signal that does not require an LLM or network call.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Positive and negative examples
+      description: Use synthetic values only.
+    validations:
+      required: true
